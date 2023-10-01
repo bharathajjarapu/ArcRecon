@@ -226,7 +226,7 @@ if /i "%achoice%" EQU "N" goto menu
     echo Error: Failed to download Brave browser.
     exit /b 1
     )
-    "%installerPath%" --silent
+    "%installerPath%"
     if %errorlevel% neq 0 (
         echo Error: Failed to install Brave browser.
         exit /b 1
