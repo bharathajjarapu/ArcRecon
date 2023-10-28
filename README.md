@@ -16,17 +16,20 @@ This is a windows toolkit that help in setting up Windows in clean and easy way.
 
 ## Features
 
-- [x] Uninstall Onedrive `Use it if you dont use Onedrive`
-- [x] Run Christitus Tool `Remove Unneccessary Services`
+- [x] Gaming Tweaks
 - [x] Right Click Ownership
-- [x] Tweaking for Gaming
-- [ ] Suggestions...
+- [x] Run Christitus Tool `Remove Unneccessary Services`
+- [x] Uninstall Onedrive `Use it if you dont use Onedrive`
+- [ ] Windows Package Installer
 
 ## How to use it
 
 This Script has a menu layout which navigates to different features of the Tool
 
 1. Remove OneDrive
-2. Run ChrisTitusTool [Repo](https://github.com/ChrisTitusTech/winutil)
+3. Run ChrisTitusTool [Repo](https://github.com/ChrisTitusTech/winutil)
+4. Inatall Spicetify Tweaks
+5. Install Brave Browser*
+6. Install Gamer Config
 
 You can download the installer [here](https://github.com/bharathajjarapu/ArcRecon/releases)
