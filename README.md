@@ -29,7 +29,7 @@ This Script has a menu layout which navigates to different features of the Tool
 1. Remove OneDrive
 3. Run ChrisTitusTool [Repo](https://github.com/ChrisTitusTech/winutil)
 4. Inatall Spicetify Tweaks
-5. Install Brave Browser*
+5. Install Brave Browser
 6. Install Gamer Config
 
 You can download the installer [here](https://github.com/bharathajjarapu/ArcRecon/releases)
