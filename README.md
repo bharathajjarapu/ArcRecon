@@ -16,20 +16,29 @@ This is a windows toolkit that help in setting up Windows in clean and easy way.
 
 ## Features
 
+- [x] Run Christitus Tool `Remove Unneccessary Services`
 - [x] Gaming Tweaks
 - [x] Right Click Ownership
-- [x] Run Christitus Tool `Remove Unneccessary Services`
-- [x] Uninstall Onedrive `Use it if you dont use Onedrive`
-- [ ] Windows Package Installer
+- [x] Uninstall Onedrive `Removed it since Christitus Tool has it`
+- [x] Windows Package Installer `Uses Winget`
+
+## Features to add
+
+- [x] Firefox Config to look like Arc
+- [ ] Apps install through a list
+- [ ] StartAllBack
+- [ ] Windows Tweaks `Pagefiles & Hibernation`
+- [ ] Annoying Windows 11 corrections
+- [ ] UI version using WinUI 3
 
 ## How to use it
 
 This Script has a menu layout which navigates to different features of the Tool
 
-1. Remove OneDrive
-3. Run ChrisTitusTool [Repo](https://github.com/ChrisTitusTech/winutil)
-4. Inatall Spicetify Tweaks
-5. Install Brave Browser
-6. Install Gamer Config
+1. Install Apps using Winget
+2. Run ChrisTitusTool [Repo](https://github.com/ChrisTitusTech/winutil)
+3. Install Spotify
+4. Enables or Disables Right Click Ownership Option
+5. Cofigures for Games
 
-You can download the installer [here](https://github.com/bharathajjarapu/ArcRecon/releases)
+You can download the repo [here](https://github.com/bharathajjarapu/ArcRecon.git)
