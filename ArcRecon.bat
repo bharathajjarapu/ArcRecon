@@ -1,68 +1,126 @@
 @echo off
-mode con: cols=60 lines=20
+mode con: cols=120 lines=40
 color 0A
 title Arc Recon Toolbox
-
-set "OfficePath=C:\Program Files (x86)\ArcRecon"
-set "ConfigFile=%OfficePath%\configuration.xml"
-set "UninstallExe=%OfficePath%\Uninstall.exe"
 echo.
 
 :menu
 cls
 echo.
-echo ==========================
+echo =======================
 echo     Arc Recon Toolbox
-echo ==========================
+echo =======================
 echo.
-echo 1. Run ChrisTitusTool
-echo 2. Remove OneDrive
-echo 3. Activate Spicetify
+echo 1. Install Apps
+echo 2. Run ChrisTitusTool
+echo 3. Spotify Free
 echo 4. Right Click Ownership
-echo 5. Install Brave Browser
-echo 6. Auto Game Configuration
-echo 7. Exit
+echo 5. Auto Game Configuration
+echo 6. Exit
 echo.
 
 set /p choice=Enter your choice : 
 
-if "%choice%"=="2" goto onedrive
-if "%choice%"=="1" goto ctt
+if "%choice%"=="1" goto wingets
+if "%choice%"=="2" goto ctt
 if "%choice%"=="3" goto freespotify
 if "%choice%"=="4" goto rcowner
-if "%choice%"=="5" goto brave
-if "%choice%"=="6" goto gamercfg
-if "%choice%"=="10" goto exiter
+if "%choice%"=="5" goto gamercfg
+if "%choice%"=="6" goto exiter
 
-:onedrive
-    set /P onechoice=Do you want to remove Onedrive ? (Y/N): 
-    if /i "%onechoice%"=="Y" (
-        echo Uninstalling OneDrive...
-        echo.
+:wingets
+    @echo off
+    cls
+    rem Checking Microsoft.VCLibs.x64.14.00.Desktop.appx
+    powershell -Command "& {Get-AppxPackage -Name Microsoft.VCLibs.x64.14.00.Desktop | Out-Null}"
+    if %errorlevel% neq 0 (
+        powershell -Command "& {Add-AppxPackage -Path 'C:\Path\To\Microsoft.VCLibs.x64.14.00.Desktop.appx' | Out-Null}"
+    )
 
-        REM Terminate any running OneDrive processes
-        taskkill /f /im OneDrive.exe >nul 2>&1
-        REM Uninstall OneDrive
-        %SystemRoot%\SysWOW64\OneDriveSetup.exe /uninstall >nul 2>&1
-        %SystemRoot%\System32\OneDriveSetup.exe /uninstall >nul 2>&1
+    rem Checking Microsoft.UI.Xaml.2.7.x64.appx
+    powershell -Command "& {Get-AppxPackage -Name Microsoft.UI.Xaml.2.7.x64 | Out-Null}"
+    if %errorlevel% neq 0 (
+        powershell -Command "& {Add-AppxPackage -Path 'C:\Path\To\Microsoft.UI.Xaml.2.7.x64.appx' | Out-Null}"
+    )
 
-        REM Remove OneDrive folders and registry keys
-        rd "%UserProfile%\OneDrive" /Q /S >nul 2>&1
-        rd "C:\OneDriveTemp" /Q /S >nul 2>&1
-        rd "%LocalAppData%\Microsoft\OneDrive" /Q /S >nul 2>&1
-        rd "%ProgramData%\Microsoft OneDrive" /Q /S >nul 2>&1
+    rem Checking Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle
+    powershell -Command "& {Get-AppxPackage -Name Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle | Out-Null}"
+    if %errorlevel% neq 0 (
+        powershell -Command "& {Add-AppxPackage -Path 'C:\Path\To\Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle' | Out-Null}"
+    )
+    cls
+    color 0A
+    echo.
+    echo Install Apps using Winget
+    echo ==================================================
+    echo 1. Install Apps
+    echo 2. Install UWP Apps Only
+    echo 3. Update Apps
+    echo 4. Uninstall UWP Apps
+    echo 5. Exit
+    echo ==================================================
+    set /p wcop=Type option : 
+    if "%wcop%"=="1" goto searchapps
+    if "%wcop%"=="2" goto searchuwpapps
+    if "%wcop%"=="3" goto updateapps
+    if "%wcop%"=="4" goto uninstallapps
+    if "%wcop%"=="5" goto menu
+    cls
 
-        reg delete "HKEY_CLASSES_ROOT\CLSID\{018D5C66-4533-4307-9B53-224DE2ED1FE6}" /f >nul 2>&1
-        reg delete "HKEY_CLASSES_ROOT\Wow6432Node\CLSID\{018D5C66-4533-4307-9B53-224DE2ED1FE6}" /f >nul 2>&1
-        reg delete "HKEY_CURRENT_USER\Software\Microsoft\OneDrive" /f >nul 2>&1
-        reg delete "HKEY_LOCAL_MACHINE\SOFTWARE\Classes\CLSID\{018D5C66-4533-4307-9B53-224DE2ED1FE6}" /f >nul 2>&1
-        reg delete "HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Classes\CLSID\{018D5C66-4533-4307-9B53-224DE2ED1FE6}" /f >nul 2>&1
+:searchapps
+    cls
+    color 0A
+    set /P appchoice=App Name : 
+    if "%appchoice%"=="0" (
+        cls
+        goto wingets
+    )
+    powershell -Command "winget search %appchoice%"
+    set /P installchoice=Enter the ID of the app : 
+    powershell -Command "winget show %installchoice%"
+    powershell -Command "winget install %installchoice% -h --accept-package-agreements --accept-source-agreements"
+    pause
+    cls
+    goto wingets
 
-        echo.
-        echo OneDrive has been uninstalled.
-        pause
-        goto menu
-    ) else goto menu
+:searchuwpapps
+    cls
+    color 0A
+    set /P uwpappchoice=App Name : 
+    if "%uwpappchoice%"=="0" cls goto wingets
+    powershell -Command "winget search %uwpappchoice% --source msstore"
+    set /P installuwpchoice=Enter the ID of the app : 
+    powershell -Command "winget show %installuwpchoice%"
+    powershell -Command "winget install %installuwpchoice% --source msstore -h --accept-package-agreements --accept-source-agreements"
+    pause
+    cls
+    goto wingets
+
+:updateapps
+    cls
+    color 0A
+    echo Apps Upgradable
+    echo.
+    powershell -Command "winget upgrade"
+    echo.
+    echo Enter all for all apps
+    set /P upchoice=Enter the ID of the app : 
+    if "%upchoice%"=="0" cls goto wingets
+    powershell -Command "winget upgrade %upchoice%"
+    pause
+    cls
+    goto wingets
+
+:uninstallapps
+    cls
+    color 0A
+    powershell -Command "winget list --source msstore"
+    set /P unichoice=Enter the ID of the app : 
+    if "%unichoice%"=="0" cls goto wingets
+    powershell -Command "winget uninstall %unichoice%"
+    pause
+    cls
+    goto wingets
 
 :ctt
     set /P cttchoice=Do you want to use the Chris Titus tool? (Y/N): 
@@ -73,10 +131,11 @@ if "%choice%"=="10" goto exiter
     ) else goto menu    
 
 :freespotify
-    echo Install Spotify and login in to your account before running this ...
-    set /P spotchoice=Do you want to install Spicetify? (Y/N): 
+    color 0A
+    echo Accept the prompts on installing !!
+    set /P spotchoice=Do you want to install Spotify Free? (Y/N): 
     if /i "%spotchoice%"=="Y" (
-        powershell -Command "iwr -useb https://raw.githubusercontent.com/spicetify/spicetify-cli/master/install.ps1 | iex" 
+        powershell -Command "winget install Spotify.Spotify -h --accept-package-agreements --accept-source-agreements"
         pause
         powershell -Command "iwr -useb https://raw.githubusercontent.com/spicetify/spicetify-marketplace/main/resources/install.ps1 | iex"
         pause
@@ -85,6 +144,7 @@ if "%choice%"=="10" goto exiter
 
 :rcowner
     cls
+    color 0A
     echo.
     echo Right-click Take Ownership Menu
     echo ==================================================
@@ -115,6 +175,7 @@ if "%choice%"=="10" goto exiter
 
     :remowner
     cls
+    color 0A
     echo Removing Take Ownership from the Context Menu...
     Reg delete "HKCR\*\shell\runas" /f
     Reg delete "HKCR\Directory\shell\runas" /f
@@ -122,25 +183,9 @@ if "%choice%"=="10" goto exiter
     cls
     echo Take Ownership has been removed from the context menu.
     goto begin
-    
-:brave
-    set "braveInstallerURL=https://laptop-updates.brave.com/latest/winx64"
-    set "installerPath=%USERPROFILE%\Downloads\BraveInstaller.exe"
-    powershell -command "(New-Object System.Net.WebClient).DownloadFile('%braveInstallerURL%', '%installerPath%')"
-    if %errorlevel% neq 0 (
-    echo Error: Failed to download Brave browser.
-    exit /b 1
-    )
-    "%installerPath%"
-    if %errorlevel% neq 0 (
-        echo Error: Failed to install Brave browser.
-        exit /b 1
-    )
-    del "%installerPath%"
-    echo Brave browser has been successfully installed.
-    goto menu
 
 :gamercfg
+    color 0A
     setlocal enabledelayedexpansion
     for /f "tokens=*" %%i in ('powercfg /list ^| findstr /i "Ultimate Performance"') do (
         set "powerPlanExists=1"
@@ -159,6 +204,7 @@ if "%choice%"=="10" goto exiter
     goto begin
 
 :exiter
+    color 0A
     if exist "%OfficePath%"(
     start /wait "" "%UninstallExe%"
     echo Tool uninstallation completed.
